@@ -45,7 +45,7 @@
       mathbox
         .viewport({
           type: 'cartesian',
-          range: [[0, 1], [-1, 1], [0, 1]],
+          range: [[-1, 1], [-1, 1], [-1, 1]],
           scale: [.8, .8, .8],
         })
         .camera({
@@ -200,9 +200,9 @@
     // 4x4 grid
     [
       ['add', 'grid', {
-        axis: [ 0, 2 ],
+        axis: [ 1, 2],
         color: 0xB0B0B0,
-       
+        offset: [1,1,1],
         lineWidth: 2,
         
         ticks: [4, 4],
@@ -211,8 +211,9 @@
       }],
       ['add', 'surface', {
         id: 'dots',
-        domain: [[0, 3], [0, 3]],
+        domain: [[-3, 3], [-3, 3]],
         n: 10,
+
         points: true,
         mesh: false,
         live: true,

@@ -41,8 +41,7 @@
         scale:          1,
       }).start();
 
-      // Viewport camera/setup
-      mathbox
+       mathbox
         // Cartesian viewport
         .viewport({
           type: 'cartesian',
@@ -56,45 +55,64 @@
         })
         .transition(300)
 
-        // Axes
-        .axis({
-          id: 'a',
-          axis: 0,
-          color: 0xa0a0a0,
-          ticks: 5,
-          lineWidth: 2,
-          size: .05,
-          labels: true,
-        })
-        .axis({
-          id: 'b',
+      var director = window.director = new MathBox.Director(mathbox, scpript);
+
+      // Show info if not iframed.
+      if (top == window) {
+        document.getElementById('info').style.opacity = 1;
+      }
+
+      // Arrow controls
+      // Controls for stand-alone
+      window.addEventListener('touchstart', function (e) {
+        director.forward();
+        document.getElementById('info').style.opacity = '0';
+      });
+      window.addEventListener('keydown', function (e) {
+        if (e.keyCode == 38 || e.keyCode == 37) director.back();
+        else if (e.keyCode == 40 || e.keyCode == 39) director.forward();
+        else {
+          return;
+        }
+
+        document.getElementById('info').style.opacity = 0;
+      // Viewport camera/setup
+      
+      });
+    });
+  });
+  </script>
+
+  <script type="text/javascript">
+
+  var scpript=[
+    [
+      ['add', 'grid',{
+        axis:[0,2],
+        color: 0xc0c0c0,
+        lineWidth: 1,
+       },{duration:300,
+      }],
+    ],
+    [
+      ['add', 'axis',{
+        id: 'd',
           axis: 1,
-          color: 0xa0a0a0,
+          offset: [3, 0, -1],
           ticks: 5,
           lineWidth: 2,
-          size: .05,
-          zero: false,
-          labels: true,
-        })
-        .axis({
-          id: 'c',
-          axis: 2,
           color: 0xa0a0a0,
-          ticks: 5,
-          lineWidth: 2,
-          size: .05,
-          zero: false,
           labels: true,
-        })
+          arrow: false,
+      }],
+    ],
 
-        // Grid
-        .grid({
-          axis: [0, 2],
-          color: 0xc0c0c0,
-          lineWidth: 1,
-        })
+  ];
+  
+  </script>     
+   <script>    
 
-      // Move axis
+      /* // Move axis
       setTimeout(function () {
         mathbox.set('#c', { zero: true });
         mathbox.animate('#a', {
@@ -149,7 +167,7 @@
           color: 0xc0c0c0,
           lineWidth: 1,
         });
-        mathbox.animate('camera', { orbit: 7, phi: τ*5/8 + .2 ,theta: 3.14}, { duration: 2500 });
+        mathbox.animate('camera', { orbit: 7, phi: τ*5/8 + .2 }, { duration: 2500 });
         mathbox.animate('#a', {
           offset: [0, -2, -1],
         }, { duration: 1500 });
@@ -164,13 +182,14 @@
       }, 6000);
 
     });
-  });
+  }); */
   </script>
+
 
   <link href="base.css" rel="stylesheet" type="text/css" media="screen">
 
 </head>
 <body>
-  <div id="info"></div>
+  <div id="info" class="transition">Use the <kbd>←</kbd><kbd>→</kbd> keys to step through.</div>
 </body>
 </html>
